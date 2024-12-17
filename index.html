@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[[PAGE_TITLE]]</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="[[ICON_PNG]]">
+    <link rel="icon" type="image/png" sizes="32x32" href="[[ICON_PNG]]">
+    <link rel="icon" type="image/png" sizes="16x16" href="[[ICON_PNG]]">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="[[ICON_PNG]]"/>
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:url" content="[[OG_URL]]"/>
+    <meta property="og:title" content="[[OG_TITLE]]"/>
+    <meta property="og:description" content="[[OG_DESCRIPTION]]"/>
+
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="[[TWITTER_TITLE]]"/>
+    <meta name="twitter:description" content="[[TWITTER_DESCRIPTION]]"/>
+    <meta name="twitter:creator" content="[[TWITTER_CREATOR]]"/>
+
+    <meta name="twitter:label1" content="Published at"/>
+    <meta name="twitter:data1" content="[[PUBLISHED_AT]]"/>
+    <meta name="twitter:label2" content="Reading time"/>
+    <meta name="twitter:data2" content="[[READING_TIME]]"/>
+</head>
+<body>
+<div class="full-page-image">
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="assets/videos/full_screen.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+    <div class="content" style="padding: 0 20px">
+        <h1>[[MAIN_HEADING]]</h1>
+        <p>[[MAIN_SUBTEXT]]</p>
+    </div>
+</div>
+
+<div id="title_slide">
+    <div class="title_left">
+        
+        <h1 style="color:#4E2A84;">[[TITLE_HEADING]]</h1>
+            <br>
+        <div class="affiliation">
+        <p> <b> This is the template of NU-MLL-Lab paper websites. </b> </p>
+        <p> Please check index.html and make sure <b>all content inside "[[]]" are replaced</b> with 
+            the content of the paper or have been removed.</p>
+        <p> after that, please <b>check all hyperlinks</b> by CTRL+F "src" and "href" in the html file and make sure they are correctly placed. </p>
+        <p> please refer to 
+            <a href="https://transic-robot.github.io/" style="color:#4E2AFF;">this website</a> 
+            or 
+            <a href="/index_old.html" style="color:#4E2AFF;">index_old.html</a> in this folder for the original code if you feel not sure what to fill in the pleaceholders. </p>
+        </div class="affiliation">
+
+
+        <div class="author-container">
+            <div class="author-name"><a href="[[AUTHOR_WEBSITE]]" target="_blank">[[AUTHOR_NAME]]</a></div>
+        </div>
+        <div class="affiliation">
+            <p><img src="assets/logos/Northwestern_purple_RGB.png" style="height: 20px"></p>
+        </div>
+        <div class="venue">
+            <p><b>[[VENUE]]</b></p>
+        </div>
+        <div class="button-container">
+            <a href="[[LINK]]" target="_blank" class="button"><i class="ai ai-arxiv"></i>&emsp14;arXiv</a>
+            <a href="[[LINK]]" target="_blank" class="button"><i class="fa-light fa-file"></i>&emsp14;PDF</a>
+            <a href="[[LINK]]" target="_blank" class="button"><i
+                    class="fa-brands fa-x-twitter"></i>&emsp14;tl;dr</a>
+            <a href="[[LINK]]" target="_blank" class="button"><i
+                    class="fa-light fa-code"></i>&emsp14;Algo Code</a>
+            <a href="[[LINK]]" target="_blank" class="button"><i
+                    class="fa-light fa-gear-code"></i>&emsp14;Sim Code</a>
+            <a href="[[LINK]]" target="_blank" class="button"><i
+                    class="fa-light fa-robot-astromech"></i>&emsp14;Models</a>
+            <a href="[[LINK]]" target="_blank" class="button"><i
+                    class="fa-light fa-face-smiling-hands"></i>&emsp14;Data</a>
+        </div>
+        <br>
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <video autoplay muted playsinline loop preload="metadata" width="100%">
+                    <source src="assets/videos/pull/grid.mp4" type="video/mp4">
+                </video>
+                <div class="text">[[SLIDESHOW_TEXT_1]]
+                </div>
+            </div>
+
+            <div class="mySlides fade">
+                <video autoplay muted playsinline loop preload="metadata" width="100%">
+                    <source src="assets/videos/pull/square_table.mp4" type="video/mp4">
+                </video>
+                <div class="text">[[SLIDESHOW_TEXT_2]]</div>
+            </div>
+        </div>
+        <br>
+        <div id="abstract">
+            <h1>[[ABSTRACT_TITLE]]</h1>
+            <p>[[ABSTRACT_CONTENT]]</p>
+        </div>
+    </div>
+</div>
+<hr class="rounded">
+<div id="overview">
+    <h1>[[OVERVIEW_TITLE]]</h1>
+    <p>[[OVERVIEW_CONTENT]]</p>
+
+    <div class="allegrofail">
+        <div class="video_container">
+            <video loop autoplay muted playsinline preload="metadata">
+                <source src="assets/videos/residual_policy.mp4" type="video/mp4">
+            </video>
+            <div class="caption">
+                <p>[[VIDEO_CAPTION_1]]</p>
+            </div>
+        </div>
+    </div>
+
+    <h1>[[SECTION_TITLE_1]]</h1>
+    <p>[[SECTION_CONTENT_1]]</p>
+    
+    <h1>[[SECTION_TITLE_2]]</h1>
+    <p>[[SECTION_CONTENT_2]]</p>
+    
+    <h1>[[EXPERIMENTS_TITLE]]</h1>
+    <p>[[EXPERIMENTS_INTRO]]</p>
+
+    <h1>[[RESULTS_TITLE]]</h1>
+    <p>[[RESULTS_CONTENT]]</p>
+
+    <h1>[[FAILURE_CASES_TITLE]]</h1>
+    <p>[[FAILURE_CASES_CONTENT]]</p>
+    <div class="allegroupper">
+        <video autoplay muted playsinline loop preload="metadata">
+            <source src="[[FAILURE_VIDEO_1]]" type="video/mp4">
+        </video>
+        <video autoplay muted playsinline loop preload="metadata">
+            <source src="[[FAILURE_VIDEO_2]]" type="video/mp4">
+        </video>
+    </div>
+
+    <h1>[[CONCLUSION_TITLE]]</h1>
+    <p>[[CONCLUSION_CONTENT]]</p>
+
+    <h1>[[ACKNOWLEDGEMENT_TITLE]]</h1>
+    <p>[[ACKNOWLEDGEMENT_CONTENT]]</p>
+
+    <h1>[[BIBTEX_TITLE]]</h1>
+    <p class="bibtex">[[BIBTEX_CONTENT]]</p>
+    <br>
+</div>
+</body>
+<script src="assets/js/full_screen_video.js"></script>
+<script src="assets/js/carousel.js"></script>
+</html>

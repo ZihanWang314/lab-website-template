@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAPER TITLE</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://transic-robot.github.io/assets/img/card.png"/>
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:url" content="https://transic-robot.github.io/"/>
+    <meta property="og:title" content="TRANSIC"/>
+    <meta property="og:description" content="Sim-to-Real Policy Transfer by Learning from Online Correction"/>
+
+    <!-- twitter card -->
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="TRANSIC"/>
+    <meta name="twitter:description"
+          content="Sim-to-Real Policy Transfer by Learning from Online Correction"/>
+    <meta name="twitter:creator" content="@YunfanJiang"/>
+
+    <!-- extra metadata for Slack unfurls -->
+    <meta name="twitter:label1" content="Published at"/>
+    <meta name="twitter:data1" content="CoRL 2024"/>
+    <meta name="twitter:label2" content="Reading time"/>
+    <meta name="twitter:data2" content="10 minutes"/>
+
+    <!-- extra metadata — unknown support -->
+    <meta property="og:type" content="article"/>
+    <meta property="article:section" content="Research"/>
+    <meta property="article:tag" content="Robotics"/>
+    <meta property="article:tag" content="Machine Learning"/>
+
+</head>
+<body>
+
+<div class="full-page-image">
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="assets/videos/full_screen.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+    <div class="content" style="padding: 0 20px">
+        <h1>T<span style="font-variant-caps:all-small-caps;">RANSIC</span>: Sim-to-Real Policy Transfer by Learning from
+            Online Correction</h1>
+        <p>An RL sim-to-real policy trained with T<span style="font-variant-caps:all-small-caps;">RANSIC</span>
+            successfully
+            completes a long-horizon and contact-rich task: assembling a table lamp from scratch.</p>
+    </div>
+</div>
+
+<div id="title_slide">
+    <div class="title_left">
+        <h1>T<span style="font-variant-caps:all-small-caps;">RANSIC</span>: Sim-to-Real Policy Transfer <br>by Learning
+            from Online Correction</h1>
+        <div class="author-container">
+            <div class="author-name"><a href="https://yunfanj.com/" target="_blank">Yunfan Jiang</a></div>
+            <div class="author-name"><a href="https://www.chenwangjeremy.net/" target="_blank">Chen Wang</a>
+            </div>
+            <div class="author-name"><a href="https://ai.stanford.edu/~zharu/" target="_blank">Ruohan
+                Zhang</a></div>
+            <div class="author-name"><a href="https://jiajunwu.com/" target="_blank">Jiajun Wu</a></div>
+            <div class="author-name"><a href="https://profiles.stanford.edu/fei-fei-li" target="_blank">Li Fei-Fei</a>
+            </div>
+        </div>
+        <div class="affiliation">
+            <p><img src="assets/logos/SUSig-red.png" style="height: 50px"></p>
+        </div>
+        <div class="venue">
+            <p>
+                <b>Conference on Robot Learning (CoRL) 2024</b>
+            </p>
+        </div>
+        <div class="button-container">
+            <a href="https://arxiv.org/abs/2405.10315" target="_blank" class="button"><i class="ai ai-arxiv"></i>&emsp14;arXiv</a>
+            <a href="assets/pdf/transic_paper.pdf" target="_blank" class="button"><i class="fa-light fa-file"></i>&emsp14;PDF</a>
+            <a href="https://x.com/YunfanJiang/status/1791498916548272489" target="_blank" class="button"><i
+                    class="fa-brands fa-x-twitter"></i>&emsp14;tl;dr</a>
+            <a href="https://github.com/transic-robot/transic" target="_blank" class="button"><i
+                    class="fa-light fa-code"></i>&emsp14;Algo Code</a>
+            <a href="https://github.com/transic-robot/transic-envs" target="_blank" class="button"><i
+                    class="fa-light fa-gear-code"></i>&emsp14;Sim Code</a>
+            <a href="https://huggingface.co/transic-robot/models" target="_blank" class="button"><i
+                    class="fa-light fa-robot-astromech"></i>&emsp14;Models</a>
+            <a href="https://huggingface.co/datasets/transic-robot/data" target="_blank" class="button"><i
+                    class="fa-light fa-face-smiling-hands"></i>&emsp14;Data</a>
+        </div>
+
+        <br>
+
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <video autoplay muted playsinline loop preload="metadata" width="100%">
+                    <source src="assets/videos/pull/grid.mp4" type="video/mp4">
+                </video>
+                <div class="text">T<span style="font-variant-caps:all-small-caps;">RANSIC</span> for sim-to-real
+                    transfer of robot manipulation policies.
+                </div>
+            </div>
+
+            <div class="mySlides fade">
+                <video autoplay muted playsinline loop preload="metadata" width="100%">
+                    <source src="assets/videos/pull/square_table.mp4" type="video/mp4">
+                </video>
+                <div class="text">Assemble a square table.</div>
+            </div>
+
+            <div class="mySlides fade">
+                <video autoplay muted playsinline loop preload="metadata" width="100%">
+                    <source src="assets/videos/pull/lamp1.mp4" type="video/mp4">
+                </video>
+                <div class="text">Assemble a table lamp.</div>
+            </div>
+
+            <div class="mySlides fade">
+                <video autoplay muted playsinline loop preload="metadata" width="100%">
+                    <source src="assets/videos/pull/stabilize.mp4" type="video/mp4">
+                </video>
+                <div class="text">Stabilize the square tabletop by pushing it to the right corner of the wall.</div>
+            </div>
+
+            <div class="mySlides fade">
+                <video autoplay muted playsinline loop preload="metadata" width="100%">
+                    <source src="assets/videos/pull/grasp_and_insert_bulb.mp4" type="video/mp4">
+                </video>
+                <div class="text">Grasp a light bulb and insert it into the lamp base.</div>
+            </div>
+
+            <div class="mySlides fade">
+                <video autoplay muted playsinline loop preload="metadata" width="100%">
+                    <source src="assets/videos/pull/screw.mp4" type="video/mp4">
+                </video>
+                <div class="text">Screw a table leg into the square tabletop.</div>
+            </div>
+
+            <div class="mySlides fade">
+                <video autoplay muted playsinline loop preload="metadata" width="100%">
+                    <source src="assets/videos/pull/grasp_bulb.mp4" type="video/mp4">
+                </video>
+                <div class="text">Reach and grasp a quasi-static light bulb.</div>
+            </div>
+
+            <div class="mySlides fade">
+                <video autoplay muted playsinline loop preload="metadata" width="100%">
+                    <source src="assets/videos/pull/insert.mp4" type="video/mp4">
+                </video>
+                <div class="text">Insert a table leg into the assembly hole of the square tabletop.</div>
+            </div>
+
+            <div class="mySlides fade">
+                <video autoplay muted playsinline loop preload="metadata" width="100%">
+                    <source src="assets/videos/pull/screw_bulb.mp4" type="video/mp4">
+                </video>
+                <div class="text">Screw a light bulb into the base.</div>
+            </div>
+
+            <!-- Next and previous buttons -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+
+        <!-- The dots/circles -->
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+            <span class="dot" onclick="currentSlide(6)"></span>
+            <span class="dot" onclick="currentSlide(7)"></span>
+            <span class="dot" onclick="currentSlide(8)"></span>
+            <span class="dot" onclick="currentSlide(9)"></span>
+        </div>
+        <div id="abstract">
+            <h1>Abstract</h1>
+            <p>
+                Learning in simulation and transferring the learned policy to the real world has the potential to enable
+                generalist robots. The key challenge of this approach is to address simulation-to-reality (sim-to-real)
+                gaps. Previous methods often require domain-specific knowledge <i>a priori</i>. We argue that a
+                straightforward way to obtain such knowledge is by asking humans to observe and assist robot policy
+                execution in the real world. The robots can then learn from humans to close various sim-to-real gaps. We
+                propose T<span style="font-variant-caps:all-small-caps;">RANSIC</span>, a data-driven approach to enable
+                successful sim-to-real transfer based on a
+                human-in-the-loop framework. T<span style="font-variant-caps:all-small-caps;">RANSIC</span> allows
+                humans to augment simulation policies to overcome various
+                unmodeled sim-to-real gaps holistically through intervention and online correction. Residual policies
+                can be learned from human corrections and integrated with simulation policies for autonomous execution.
+                We show that our approach can achieve successful sim-to-real transfer in complex and contact-rich
+                manipulation tasks such as furniture assembly. Through synergistic integration of policies learned in
+                simulation and from humans, T<span style="font-variant-caps:all-small-caps;">RANSIC</span> is effective
+                as a holistic approach to addressing various, often
+                coexisting sim-to-real gaps. It displays attractive properties such as scaling with human effort.
+            </p>
+        </div>
+    </div>
+</div>
+<hr class="rounded">
+<div id="overview">
+    <h1>Method Overview</h1>
+    <p>
+        At a high level, after training the base policy in simulation, we deploy it on the real robot while monitored by
+        a human
+        operator. The human interrupts the autonomous execution when necessary and provides online correction through
+        teleoperation. Such intervention and online correction are collected to train a residual policy, after which
+        both base and residual policies are deployed to complete contact-rich manipulation tasks.
+    </p>
+    <div class="allegrofail">
+        <div class="video_container">
+            <video loop autoplay muted playsinline preload="metadata">
+                <source src="assets/videos/method_overview.mp4" type="video/mp4">
+            </video>
+            <div class="caption">
+                <p>
+                    <b>(a)</b> Base policies are first trained in simulation through <i>action space distillation</i>
+                    with demonstrations generated by RL teacher policies. Base policies take point cloud as input to
+                    reduce perception gap. <b>(b)</b> The acquired base policies are first deployed with a human
+                    operator monitoring the execution. The human intervenes and corrects through teleoperation when
+                    necessary. Such correction data are collected to learn <i>residual policies</i>. Finally, both
+                    residual policies and base policies are integrated during test time to achieve a successful
+                    transfer.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <h1>Residual Policy Learning from Human Correction to Bridge Sim-to-Real Gaps</h1>
+    <p>
+        Our key insight is that the human-in-the-loop framework is promising for addressing the sim-to-real gaps as a
+        whole, in which humans directly assist the physical robots during policy execution by providing online
+        correction signals. The knowledge required to close sim-to-real gaps can be learned from human signals.
+    </p>
+    <div class="allegrofail">
+        <div class="video_container">
+            <video loop autoplay muted playsinline preload="metadata">
+                <source src="assets/videos/residual_policy.mp4" type="video/mp4">
+            </video>
+            <div class="caption">
+                <p>
+                    Simulation policies are deployed where a human operator monitors the execution. The human intervenes
+                    and corrects through teleoperation when necessary. Such intervention and correction data are
+                    collected to learn <i>residual policies</i>. Finally, both residual policies and simulation policies
+                    are integrated during test time to achieve successful transfer.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <h1>Large-Scale Simulation Training to Acquire Base Policies</h1>
+    <p>
+        Using the state-of-the-art simulation technique, we train base policies in simulation with hundreds of thousands
+        of frames per second. This greatly alleivates the human burden for data collection. We first train teacher
+        policies with model-free reinforcement learning (RL) on massively parallelized environments. We then distill RL
+        teacher policies into student visuomotor policies.
+    </p>
+
+    <div class="allegrofail">
+        <div class="video_container">
+            <video loop autoplay muted playsinline preload="metadata">
+                <source src="assets/videos/sim.mp4" type="video/mp4">
+            </video>
+            <div class="caption">
+                <p>
+                    For each manipulation skill, we first train an RL policy and then distill into a visuomotor policy.
+                    We apply domain randomization such that trained simulation policies are robust enough. Several
+                    important design choices are made to facilitate sim-to-real transfer, such as taking point cloud
+                    inputs and adopting joint position actions.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <h1>Visuomotor Policies with Point Cloud Observations and Joint Position Actions</h1>
+
+    <p>
+        We use point cloud as the main visual modality. Typical RGB observation used in visuomotor policy training
+        suffers from several drawbacks that hinder successful transfer. Well-calibrated point cloud observation can
+        bypass these issues.
+        <br>
+        We first train the teacher policy with OSC for the ease of learning and then distill successful
+        trajectories into the student policy with joint position control. We name this approach as <i>action space
+        distillation</i> and find it crucial to overcome the sim-to-real controller gap.
+    </p>
+    <div class="allegrofail">
+        <div class="video_container">
+            <video loop autoplay muted playsinline preload="metadata">
+                <source src="assets/videos/pcd_grid.mp4" type="video/mp4">
+            </video>
+            <div class="caption">
+                <p>
+                    We use point cloud as the main visual modality. Simulation polices are trained on downsampled
+                    synthetic point-cloud observations. They are able to transfer to real-world point-cloud observations
+                    captured by standard depth cameras.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <h1>Experiments</h1>
+    <p>We seek to answer the following research questions with our experiments:</p>
+    <details>
+        <summary>Research Questions</summary>
+        <p>
+            <i>Q1</i>: Does T<span style="font-variant-caps:all-small-caps;">RANSIC</span> lead to better transfer
+            performance while require less real-world data?
+            <br>
+            <i>Q2</i>: How effective can T<span style="font-variant-caps:all-small-caps;">RANSIC</span> address
+            different types of sim-to-real gaps?
+            <br>
+            <i>Q3</i>: How does T<span style="font-variant-caps:all-small-caps;">RANSIC</span> scale with human effort?
+            <br>
+            <i>Q4</i>: Does T<span style="font-variant-caps:all-small-caps;">RANSIC</span> exhibit intriguing
+            properties, such as generalization to unseen objects, policy robustness,
+            ability to solve long-horizon tasks, and other emergent behaviors?
+        </p>
+    </details>
+    <p>
+        We consider complex contact-rich manipulation tasks in FurnitureBench that require high precision. Specifically,
+        we divide the assembly of a square table into four independent tasks: <i>Stabilize</i>, <i>Reach and Grasp</i>,
+        <i>Insert</i>, and <i>Screw</i>.
+    </p>
+
+    <div class="allegrofail">
+        <div class="video_container">
+            <video loop autoplay muted playsinline preload="metadata">
+                <source src="assets/videos/experiment_main.mp4" type="video/mp4">
+            </video>
+            <div class="caption">
+                <p>
+                    <b>Average success rates over four benchmarked tasks.</b> T<span
+                        style="font-variant-caps:all-small-caps;">RANSIC</span> significantly outperforms three baseline
+                    groups. They are 1) traditional sim-to-real approaches, such as domain randomization and data
+                    augmentation (“DR. & Data Aug.”) and real-world fine-tuning; 2) interactive imitation learning
+                    methods, such as HG-Dagger and IWR; and 3) approaches that only train on real-robot data, such as
+                    BC, BC-RNN, and IQL. Results are success rates averaged over four tasks. Each evaluation consists of
+                    20 trials with different initial settings. We make our best efforts to ensure the same initial
+                    configuration when evaluating different methods.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="allegrofail">
+        <div class="video_container">
+            <img src="assets/img/experiment_main_table.png">
+            <div class="caption">
+                <p>
+                    <b>Success rates per tasks.</b> T<span style="font-variant-caps:all-small-caps;">RANSIC</span>
+                    outperforms all baseline methods on all four tasks.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <p>
+        We show that in sim-to-real transfer, a good base policy learned from the simulation can be combined with
+        limited real-world data to achieve success.
+        However, effectively utilizing human correction data to address the sim-to-real gap is challenging,
+        especially when we want to prevent catastrophic forgetting of the base policy (<abbr
+            title="Does TRANSIC lead to better transfer performance while require less real-world data?"><dfn>Q1</dfn></abbr>).
+    </p>
+
+    <h1>Effectiveness in Addressing Different Sim-to-Real Gaps (<abbr
+            title="How effective can TRANSIC address different types of sim-to-real gaps?"><dfn>Q2</dfn></abbr>)</h1>
+    <p>
+        While T<span style="font-variant-caps:all-small-caps;">RANSIC</span> is a holistic approach to address multiple
+        sim-to-real gaps simultaneously, we shed light on its ability to close each individual gap. To do so, we create
+        five different simulation-reality pairs. For each of them, we intentionally create large gaps between the
+        simulation and the real world. These gaps are applied to the real-world setting and they include <i>perception
+        error</i>, <i>underactuated controller</i>, <i>embodiment mismatch</i>, <i>dynamics difference</i>, and <i>object
+        asset mismatch</i>.
+    </p>
+    <div class="allegrofail">
+        <div class="video_container" style="text-align: center">
+            <img src="assets/img/experiment_different_sim2real_gaps.png" style="width: 60%;">
+            <div class="caption" style="text-align: left">
+                <p>
+                    <b>Robustness to different sim-to-real gaps.</b> Numbers are averaged success rates (%). Polar bars
+                    represent performances after training with data collected specifically to address a particular gap.
+                    Dashed lines are zero-shot performances. Shaded circles show average performances across five pairs.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <p>
+        T<span style="font-variant-caps:all-small-caps;">RANSIC</span> achieves an average success rate of 77% across
+        five different simulation-reality pairs with deliberately exacerbated sim-to-real gaps. This indicates its
+        remarkable ability to close these individual gaps. In contrast, the best baseline method, IWR, only achieves an
+        average success rate of 18%. We attribute this effectiveness in addressing different sim-to-real gaps to the
+        residual policy design.
+    </p>
+
+
+    <h1>Scalability with Human Effort (<abbr title="How does TRANSIC scale with human effort?"><dfn>Q3</dfn></abbr>)
+    </h1>
+    <p>
+        Scaling with human effort is a desired property for human-in-the-loop robot learning methods. We show that
+        T<span style="font-variant-caps:all-small-caps;">RANSIC</span> has better human data scalability than the best
+        baseline IWR. If we increase the size of the correction dataset from 25% to 75% of the full dataset size, T<span
+            style="font-variant-caps:all-small-caps;">RANSIC</span> achieves a relative improvement of 42% in the
+        average success rate. In contrast, IWR only achieves 23% relative improvement. Additionally, IWR performance
+        plateaus at an early stage and even starts to decrease as more human data becomes available. We hypothesize that
+        IWR suffers from catastrophic forgetting and struggles to properly model the behavioral modes of humans and
+        trained robots. On the other hand, T<span style="font-variant-caps:all-small-caps;">RANSIC</span> bypasses these
+        issues by learning gated residual policies only from human correction.
+    </p>
+
+    <div class="allegrofail">
+        <div class="video_container" style="text-align: center">
+            <img src="assets/img/experiment_data_scalability.png" style="width: 50%;">
+            <div class="caption" style="text-align: left">
+                <p>
+                    <b>Scalability with human correction data.</b> Numbers are success rates averaged over four tasks
+                    with different amount of human correction data.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <h1>Intriguing Properties and Emergent Behaviors (<abbr
+            title="Does TRANSIC exhibit intriguing properties and other emergent behaviors?"><dfn>Q4</dfn></abbr>)
+    </h1>
+
+    <p>
+        We further examine T<span style="font-variant-caps:all-small-caps;">RANSIC</span> and discuss several emergent
+        capabilities. We show that 1) T<span style="font-variant-caps:all-small-caps;">RANSIC</span> has learned
+        reusable skills for category-level object generalization; 2) T<span style="font-variant-caps:all-small-caps;">RANSIC</span>
+        can reliably operate in a fully autonomous setting once the gating mechanism is learned; 3) T<span
+            style="font-variant-caps:all-small-caps;">RANSIC</span> is robust against partial point cloud observations
+        and suboptimal correction data; and 4) T<span style="font-variant-caps:all-small-caps;">RANSIC</span> learns
+        consistent visual features between the simulation and reality.
+    </p>
+
+    <div class="allegrofail">
+        <div class="video_container" style="text-align: center">
+            <img src="assets/img/experiment_ablation.png" style="width: 100%;">
+            <div class="caption" style="text-align: left">
+                <p>
+                    <b>Intriguing properties and emergent behaviors of T<span style="font-variant-caps:all-small-caps;">RANSIC</span>.</b>
+                    <b>Left:</b> Generalization to unseen objects from a new category. <b>Right:</b> The effects of
+                    different gating mechanisms (learned gating vs human gating), policy robustness against reduced
+                    cameras and suboptimal correction data, and the importance of visual encoder regularization.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <h1> Failure Cases </h1>
+    <div class="allegroupper">
+        <video autoplay muted playsinline loop preload="metadata">
+            <source src="assets/videos/insert_failure.mp4" type="video/mp4">
+        </video>
+        <video autoplay muted playsinline loop preload="metadata">
+            <source src="assets/videos/bended_gripper.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="allegrolower">
+        <div class="video_container">
+            <video autoplay muted playsinline loop preload="metadata">
+                <source src="assets/videos/unstable_grasp_pose.mp4" type="video/mp4">
+            </video>
+            <div class="caption">
+                <p><b>Several failure cases.</b> For instances, they include inaccurate insertion, bended gripper,
+                    unstable grasping pose, and over-screwing.</p>
+            </div>
+        </div>
+        <div class="video_container">
+            <video autoplay muted playsinline loop preload="metadata">
+                <source src="assets/videos/over_screw.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <h1>Conclusion</h1>
+    <p>
+        In this work, we present T<span style="font-variant-caps:all-small-caps;">RANSIC</span>, a human-in-the-loop
+        method for sim-to-real transfer in contact-rich
+        manipulation tasks. We show that combining a strong base policy from simulation with limited real-world data can
+        be effective. However, utilizing human correction data without causing catastrophic forgetting of the base
+        policy is challenging. T<span style="font-variant-caps:all-small-caps;">RANSIC</span> overcomes this by learning
+        a gated residual policy from a small amount of human
+        correction data. We show that T<span style="font-variant-caps:all-small-caps;">RANSIC</span> effectively
+        addresses various sim-to-real gaps, both collectively and
+        individually, and scales with human effort.
+    </p>
+
+    <h1>Acknowledgement</h1>
+    <p>
+        We are grateful to Josiah Wong, Chengshu (Eric) Li, Weiyu Liu, Wenlong Huang, Stephen Tian, Sanjana Srivastava,
+        and the <a href="http://pair.stanford.edu/" target="_blank">SVL PAIR group</a> for their helpful feedback and
+        insightful discussions. This work is in part supported by
+        the Stanford Institute for Human-Centered AI (HAI), ONR MURI N00014-22-1-2740, ONR MURI N00014-21-1-2801, and
+        Schmidt Sciences. Ruohan Zhang is supported by Wu Tsai Human Performance Alliance Fellowship.
+    </p>
+
+    <h1>BibTeX</h1>
+    <p class="bibtex">@inproceedings{jiang2024transic,<br>
+        &nbsp;&nbsp;title &nbsp;&nbsp;&nbsp;&nbsp;= {TRANSIC: Sim-to-Real Policy Transfer by Learning from Online
+        Correction},<br>
+        &nbsp;&nbsp;author &nbsp;&nbsp;&nbsp;= {Yunfan Jiang and Chen Wang and Ruohan Zhang and Jiajun Wu and Li
+        Fei-Fei},<br>
+        &nbsp;&nbsp;booktitle = {Conference on Robot Learning},<br>
+        &nbsp;&nbsp;year &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= {2024}<br>
+        }
+    </p>
+    <br>
+</div>
+</body>
+
+<script src="assets/js/full_screen_video.js"></script>
+<script src="assets/js/carousel.js"></script>
+</html>
